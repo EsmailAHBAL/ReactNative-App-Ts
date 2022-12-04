@@ -1,28 +1,28 @@
-import React, { useCallback, useState } from 'react'
-import { View ,Text, StyleSheet, FlatList} from 'react-native'
+import { useFonts,Inter_800ExtraBold } from '@expo-google-fonts/inter'
+import { format } from 'date-fns'
+import React, { } from 'react'
+import { View , ScrollView,ImageBackground} from 'react-native'
+import { useAppContext } from '../AppContext'
 import ModelPicker from '../components/ModePicher'
-import { MoodType, MoodTypeWithSTM } from '../Types/Types'
+import { Icons } from '../Icons/Icons'
 
+const urlImage :string=`https://images.unsplash.com/photo-1549880181-56a44cf4a9a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyMDg4MDd8MHwxfHNlYXJjaHwxMXx8bW91bnRhaW58ZW58MHx8fHwxNjY5OTgyNDgy&ixlib=rb-4.0.3&q=80&w=1080`
 const Home :React.FC = () => {
-    const mySkills :string [] = ['Spring Boot','NodeJs','NestJs','ReactJs','Vuejs']
-    const [moodStm,SetMoodSTM] = useState<MoodTypeWithSTM []>([])
-    const handlingMood = useCallback((mood:MoodType) => {
-      SetMoodSTM(c => [...c, {mood:mood,timestamp: Date.now()}])
-    },[])
+    const getAppContext = useAppContext()
+ 
+  
+    
   return (
-    <View className='m-4 border border-black py-5 rounded-lg'>
-       <View className='flex flex-row justify-center items-center'>
-       <Text className='font-bold text-lg'>How Are U Right Now !! </Text>
-       </View>
-        <ModelPicker  handlingMood ={handlingMood}/>
-        {
-          moodStm.map(item => (
-            <Text key={item.timestamp}>
-              {item.mood.emoji} : {new Date(item.timestamp).toDateString()}
-            </Text>
-          ))
-        }
-    </View>
+    <ScrollView>
+      <View className='border border-black  rounded-lg h-[690px]'>
+         <ImageBackground source={{uri:urlImage}} className='h-full' 
+            style={{flex:1,justifyContent:"center"}}>
+   
+          <ModelPicker  handlingMood ={getAppContext.handlingMood} />
+        <Icons size={40} color='blue'/>
+        </ImageBackground >
+      </View>
+     </ScrollView>
   )
 }
 
